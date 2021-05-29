@@ -1,0 +1,18 @@
+{
+  "name": "shouldermillingcalcs",
+  "version": "1.0.0",
+  "type":"module",
+  "description": "Simple shoulder milling calculations",
+  "main": "src/App.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Peter McCullough",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^8.4.0"
+  }
+}

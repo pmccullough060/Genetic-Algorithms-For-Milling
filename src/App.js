@@ -7,81 +7,62 @@ export function hello(){
    return "hello";
 };
 
-//material enums.. might get rid of this...
-const materials ={
-   ALUMINIUM: "Aluminium",
-   STEEL: "Steel"
-}
+const feedPerTooth = 0.04;
+const toolDia = 10;
+const toolLength = 30;
+const noCuttingEdges = 4;
+const spindleSpeed = 500;
 
-//materials and their respective roughing and finishing cutting speeds.
-const cuttingSpeeds =Object.freeze( {
-   [materials.ALUMINIUM]: [70,90],
-   [materials.STEEL] : [23, 28]
-});
 
-//operation enums.
-const operations ={
-   FINISHING: "Finishing",
-   ROUGHING: "Roughing"
-}
+class Member {
 
-//Calculation constants
-const thinWall = 10;
+   constructor(radial, axial){
+      this.radial = radial;
+      this.axial = axial;
+      this.feedPerTooth = feedPerTooth;
+   }
 
-const feedPerTooth = Object.freeze({
-   Under3Inc: 0.04,
-   Under10Inc: 0.08,
-   Under20Inc: 0.12,
-   Over20: 0.16
-})
+   //Increasing the feed per tooth to compensate for radial chip thinning
+   compensatedFeedPerTooth(){
+      if(this.radial < toolDia/2){
+         this.feedPerTooth = (feedPerTooth * toolDia)/(2 * Math.sqrt(toolDia*this.axial - Math.pow(this.axial,2)));
+      }
+   }
 
-//Number of cutting flutes.
-const noFLutes = 4;
+   cuttingSpeed(){
+      return (spindleSpeed * toolDia * noCuttingEdges) / 1000;
+   }
 
-runSimulation(50, 40, materials.STEEL);
+   tableFeed(){
+      return this.feedPerTooth * toolDia * spindleSpeed;
+   }
 
-function runSimulation(partWidth, cutWidth, material){
+   noPassesAxial(){
+      return 1;
+   }
 
-   var thinWall = thinWallCondition(partWidth, cutWidth);
+   noPassesRadial(){
+      return 1;
+   }
 
-   var roughCutSpeed = cuttingSpeed(material, operations.ROUGHING);
+   poorToolPositionFactor(){
+      if(this.axial >= toolDia/2){
+         return (this.axial / toolDia);
+      }
+   }
 
-   var finishCutSpeed = cuttingSpeed(material, operations.FINISHING);
-
+   fitness(){
    
+      this.compensatedFeedPerTooth();
+      
+      var cuttingSpeed = cuttingSpeed();
+      var tableFeed = tableFeed();
 
+      return -1;
+   }
 }
 
-function thinWallCondition(partWidth, cutWidth){
-   return (partWidth - cutWidth <= thinWall);
-}
+var mem = new Member(10,10, machiningParameters);
+mem.fitness();
 
-function cuttingSpeed(material, operation){
-   return operation === operations.ROUGHING ? cuttingSpeeds[material][0] : cuttingSpeeds[material][1]
-}
 
-function SpindleSpeeds(cuttingSpeed, toolDia){
-   return (vc * 1000) / (Math.PI * toolDia);
-}
-
-function tableFeed(feedPerTooth, toolDia, spindleSpeed){
-   return feedPerTooth * noFlutes * spindleSpeed;
-}
-
-function machiningStrategy(thinWall, toolDia){
-
-   var radialStock = radialStockToLeave(thinWall, toolDia);
-
-   var axialStock = axialStockToLeave(toolDia);
-
-   
-
-}
-
-function radialStockToLeave(thinWall, toolDia){
-   return thinWall ? toolDia : toolDia * 0.05;
-}
-
-function axialStockToLeave(toolDia){
-   return toolDia * 0.01;
-}

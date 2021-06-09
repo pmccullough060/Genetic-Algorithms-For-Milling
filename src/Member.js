@@ -14,23 +14,15 @@ const tangForceMax = 5;
 //Specific cutting force alu
 const spefCuttingForce = 1000;
 
-export function hello(){
-   return "hello peter";
-}
-
-class Member {
+export class Member {
 
    constructor(radial, axial){
+
       this.radial = radial;
       this.axial = axial;
       this.feedPerTooth = feedPerTooth;
 
       this.compensatedFeedPerTooth();
-   }
-
-   crossover(partner){
-      //randomly split the genetic information with the partner.
-      const {}
    }
 
    compensatedFeedPerTooth(){

@@ -9,13 +9,14 @@ const cutAxial = 20;
 const cutRadial = 20;
 
 //Max tangential cutting force
-const tangForceMax = 5;
+const tangForceMax = 0.1;
 
 //Specific cutting force alu
 const spefCuttingForce = 1000;
 
 export class Member {
 
+   //would be beneficial if radial and axial where immutable?
    constructor(radial, axial){
 
       this.radial = radial;
@@ -31,11 +32,6 @@ export class Member {
       if(this.radial < toolDia/2){
          this.feedPerTooth = (feedPerTooth * toolDia)/(2 * Math.sqrt(toolDia * this.radial - Math.pow(this.radial , 2)));
       }
-   }
-
-   cuttingSpeed(){
-      //spindleSpeed (r/min), toolDia (mm), cuttingSpeed (m/min)
-      return (spindleSpeed * toolDia * noCuttingEdges) / 1000;
    }
 
    tableFeed(){
@@ -58,8 +54,11 @@ export class Member {
       //Accounts for "Over cutting" in the axial direction where axial > toolDia/2 which overheats the tool.
       //The effect of radial chip thinning is mitigated by increasing the feedPerTooth so "light" cuts are not penalised.
       //axial (mm), toolDia (mm)
-      if(this.axial > toolDia/2){
-         return ((this.axial-toolDia/2) / (toolDia/2));
+      if(this.radial > toolDia/2){
+         return (this.radial-toolDia/2) / (toolDia/2);
+      }
+      else{
+         return 0;
       }
    }
 
@@ -70,12 +69,12 @@ export class Member {
 
    netPower(){
       //radial (mm), axial (mm), tableFeed (mm/min), spefCuttingForce (N/mm2), result (kW)
-      return (this.radial * this.axial * this.tableFeed() * spefCuttingForce) / 60e6;
+      return (this.radial * this.axial * this.tableFeed() * spefCuttingForce) / 6e7;
    }
 
    torque(){
       //netPower (kW), spindleSpeed (r/min), result (Nm)
-      return (this.netPower() * 30e3) /(Math.PI * spindleSpeed);
+      return (this.netPower() * 3e4) / (Math.PI * spindleSpeed);0
    }
 
    tangentialForce(){

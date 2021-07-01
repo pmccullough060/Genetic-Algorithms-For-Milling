@@ -11,20 +11,19 @@ export class Population {
       this.members = [];
    }
 
-   //temp limit to 1 need more elegant solution..
    createPopulation(){
       for(let i = 0; i < this.size; i ++ ){
-         var axial = Utilities.getRandomInt(1,toolHeight);
-         var radial = Utilities.getRandomInt(1,toolDia);
+         var axial = Utilities.randomNo(0.01,toolHeight);
+         var radial = Utilities.randomNo(0.01,toolDia);
          this.members.push(new Member(radial, axial));
       }
    }
 
    sumFitness(){
-      var sum = 0.0;
-      for (var i = 0; i < this.members.length; i++ ){
+      var sum = 0;
+      for (var i = 0; i < this.members.length; i++){
          var mem = this.members[i];
-         sum += parseFloat(mem.fitness());
+         sum += mem.fitness();
       }
       return sum;
    }

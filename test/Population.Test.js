@@ -11,13 +11,4 @@ describe('createPopulation',() => {
    });
 });
 
-describe('sumFitness',() => {
-   it('should sum fitness correctly', () => {
-      const pop = new Population(10);
-      pop.createPopulation();
 
-      var sum = 0.0;
-
-      assert.strictEqual(sum, pop.sumFitness());
-   })
-});

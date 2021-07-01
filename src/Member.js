@@ -83,7 +83,6 @@ export class Member {
    }
 
    fitness(){
-
       //Tool will fail so particular member is not valid.
       if(this.tangentialForce() >= tangForceMax){
          return 0.0;

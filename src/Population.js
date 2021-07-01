@@ -28,11 +28,11 @@ export class Population {
       return sum;
    }
 
-   _createMatingPool(){
+   createMatingPool(){
       const matingPool = [];
-      const sumFitness = this._sumFitness();
+      const sumFitness = this.sumFitness();
       
-      filteredMembers.forEach((m) => {
+      this.members.forEach((m) => {
          
          //fitness proportionate selection:
          const f= Math.floor((m.fitness() / sumFitness) * 100 ) || 1;
@@ -40,6 +40,12 @@ export class Population {
          //fitter members are more populus in the mating pool:
          for(let i = 0; i < f; i += 1){
             matingPool.push(m);
+
+            console.log(m.axial);
+            console.log(m.radial);
+            console.log(m.fitness());
+            console.log();
+
          }
       });
 

@@ -11,4 +11,15 @@ describe('createPopulation',() => {
    });
 });
 
+describe('createMatingPool',() => {
+   
+   it('should have 50 members', () => {
+      const pop = new Population(50);
+      pop.createPopulation();
+      var matingPool = pop.createMatingPool();
 
+      //Test
+
+      assert.strictEqual(50, pop.members.length)
+   });
+});

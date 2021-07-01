@@ -86,14 +86,16 @@ export class Member {
 
       //Tool will fail so particular member is not valid.
       if(this.tangentialForce() >= tangForceMax){
-         return 0;
+         return 0.0;
       }
 
       //Inverse of the time taken to cut, make things conceptual a bit easier understand later on if we optimize for max fitness.
       //totalCuttingTime (mm)
-      const intialFitness = 1 / this.totalCuttingTime() * 100;
+      var intialFitness = (1 / this.totalCuttingTime() * 100);
 
       //The penalty for poor tool position can be up to 20% of the cutting time where radial = toolDia;
-      return intialFitness - this.poorToolPositionFactor() * intialFitness* 0.2;
+      var finalFitness = intialFitness - this.poorToolPositionFactor() * intialFitness* 0.2;
+
+      return finalFitness
    }
 }

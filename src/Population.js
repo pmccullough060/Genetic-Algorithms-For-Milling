@@ -4,23 +4,29 @@ import * as Utilities from '../src/Utilities.js';
 const toolHeight = 20;
 const toolDia = 10;
 
-class Population {
+export class Population {
 
    constructor(size){
       this.size = size;
       this.members = [];
    }
 
+   //temp limit to 1 need more elegant solution..
    createPopulation(){
-      for(let i = 0; i < this.size; i += 1){
-         var axial = Utilities.getRandomInt(0,toolHeight);
-         var radial = Utilities.getRandomInt(0,toolDia);
+      for(let i = 0; i < this.size; i ++ ){
+         var axial = Utilities.getRandomInt(1,toolHeight);
+         var radial = Utilities.getRandomInt(1,toolDia);
          this.members.push(new Member(radial, axial));
       }
    }
 
-   _sumFitness(){
-      return this.members.reduce((prev, curr) => prev + curr.fitness(),0);
+   sumFitness(){
+      var sum = 0.0;
+      for (var i = 0; i < this.members.length; i++ ){
+         var mem = this.members[i];
+         sum += parseFloat(mem.fitness());
+      }
+      return sum;
    }
 
    _createMatingPool(){

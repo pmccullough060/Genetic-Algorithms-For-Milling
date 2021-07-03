@@ -155,14 +155,31 @@ describe('fitness', () => {
       assert.strictEqual(0, member.fitness());
    });
 
-   it('should return 600', () => {
-      const member = new Member(5,20);
-      assert.strictEqual(600, member.fitness());
+   it('should return 300', () => {
+      const member = new Member(5,10);
+      assert.strictEqual(300, member.fitness());
    });
 
-   it('should return 480', () => {
-      const member = new Member(10,10);
-      assert.strictEqual(480, member.fitness());
+   it('should return 240', () => {
+      const member = new Member(10,5);
+      assert.strictEqual(240, member.fitness());
    });
 })
 
+describe('crossover', () => {
+
+   it('should mutate correctly', () => {
+      const dad = new Member(5, 10);
+      const mum = new Member(1, 2);
+      const child = mum.crossover(dad);
+
+      //verify that child contains genetic material from mum and dad:
+      const dadGenes = [dad.radial, dad.axial];
+      const mumGenes = [mum.radial, mum.axial];
+      const childGenes = [child.radial, child.axial];
+      
+      assert.isTrue(dadGenes.filter(value => childGenes.includes(value)) > 0);
+      assert.isTrue(mumGenes.filter(value => childGenes.includes(value)) > 0);
+      assert.isFalse(mumGenes.filter(value => dadGenes.includes(value)) > 0);
+   });
+})

@@ -1,5 +1,5 @@
 import { Member } from '../src/Member.js';
-import * as Utilities from '../src/Utilities.js'; 
+import { randomNo } from '../src/Utilities.js'; 
 
 const toolHeight = 20;
 const toolDia = 10;
@@ -13,8 +13,8 @@ export class Population {
 
    createPopulation(){
       for(let i = 0; i < this.size; i ++ ){
-         var axial = Utilities.randomNo(0.01,toolHeight);
-         var radial = Utilities.randomNo(0.01,toolDia);
+         var axial = randomNo(0.01,toolHeight);
+         var radial = randomNo(0.01,toolDia);
          this.members.push(new Member(radial, axial));
       }
    }
@@ -41,15 +41,15 @@ export class Population {
          for(let i = 0; i < f; i += 1){
             matingPool.push(m);
 
-            console.log(m.axial);
-            console.log(m.radial);
-            console.log(m.fitness());
+            //Here for testing purposes:
+            console.log(`axial ${ m.axial }`);
+            console.log(`radial ${ m.radial }`);
+            console.log(`fitness ${ m.fitness() }`);
+            console.log(`tangential force ${ m.tangentialForce() }`);
             console.log();
-
          }
       });
 
       return matingPool;
    }
-
 }

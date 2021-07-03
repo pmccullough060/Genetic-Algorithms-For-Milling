@@ -7,3 +7,8 @@ export function randomNo(min, max){
 export function randomInt(min, max){
    return Math.floor(Math.random()*(max - min + 1) + min);
 }
+
+//returns a random boolean value
+export function randomBool(){
+   return Math.random() < 0.5;
+}

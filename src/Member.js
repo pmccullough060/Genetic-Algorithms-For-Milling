@@ -1,3 +1,5 @@
+import { randomBool } from '../src/Utilities.js'; 
+
 const feedPerTooth = 0.1;
 const toolDia = 10;
 const noCuttingEdges = 4;
@@ -9,7 +11,7 @@ const cutAxial = 20;
 const cutRadial = 20;
 
 //Max tangential cutting force
-const tangForceMax = 0.1;
+const tangForceMax = 0.05;
 
 //Specific cutting force alu
 const spefCuttingForce = 1000;
@@ -24,6 +26,13 @@ export class Member {
       this.feedPerTooth = feedPerTooth;
 
       this.compensatedFeedPerTooth();
+   }
+
+   crossover(partner){
+      //we can bias the crossover too if need by changing randomBool method:
+      return randomBool() 
+                     ? new Member(this.radial, partner.axial) 
+                     : new Member(partner.radial, this.axial);
    }
 
    compensatedFeedPerTooth(){

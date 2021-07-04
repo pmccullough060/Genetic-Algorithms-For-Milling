@@ -1,13 +1,14 @@
 import { Member } from '../src/Member.js';
-import { randomNo } from '../src/Utilities.js'; 
+import { randomNo, randomInt } from '../src/Utilities.js'; 
 
 const toolHeight = 20;
 const toolDia = 10;
 
 export class Population {
 
-   constructor(size){
+   constructor(size, mutationRate){
       this.size = size;
+      this.mutationRate = mutationRate;
       this.members = [];
    }
 
@@ -49,7 +50,24 @@ export class Population {
             console.log();
          }
       });
-
       return matingPool;
+   }
+
+   reproduce(matingPool){
+      for (let i = 0; i < this.members.length; i++){
+         
+         //pick two random members from the mating pool:
+         const mum = matingPool[randomInt(0, matingPool.length)];
+         const dad = matingPool[randomInt(0, matingPool.length)];
+
+         //crossover
+         const child = mum.reproduce(dad);
+
+         //mutation
+         child.mutate()
+
+         //member is "replaced" with a new child
+         this.members[i] = child;
+      }
    }
 }

@@ -30,9 +30,21 @@ export class Member {
 
    crossover(partner){
       //we can bias the crossover too if need by changing randomBool method:
-      return randomBool() 
-                     ? new Member(this.radial, partner.axial) 
-                     : new Member(partner.radial, this.axial);
+      return randomBool() ? new Member(this.radial, partner.axial) 
+                          : new Member(partner.radial, this.axial);
+   }
+
+   mutate(mutationRate){
+      
+      //Mutate radial:
+      if(Math.random() < mutationRate){
+         //mutate radial cut
+      }
+
+      //Mutate axial:
+      if(Math.random() < mutationRate){
+         //mutate axial cut
+      }
    }
 
    compensatedFeedPerTooth(){

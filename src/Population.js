@@ -41,19 +41,13 @@ export class Population {
          //fitter members are more populus in the mating pool:
          for(let i = 0; i < f; i += 1){
             matingPool.push(m);
-
-            //Here for testing purposes:
-            console.log(`axial ${ m.axial }`);
-            console.log(`radial ${ m.radial }`);
-            console.log(`fitness ${ m.fitness() }`);
-            console.log(`tangential force ${ m.tangentialForce() }`);
-            console.log();
          }
       });
       return matingPool;
    }
 
    reproduce(matingPool){
+      //before this step we should potentially reduce the size of the population
       for (let i = 0; i < this.members.length; i++){
          
          //pick two random members from the mating pool:
@@ -61,13 +55,20 @@ export class Population {
          const dad = matingPool[randomInt(0, matingPool.length)];
 
          //crossover
-         const child = mum.reproduce(dad);
+         const child = mum.crossover(dad);
 
          //mutation
          child.mutate()
 
          //member is "replaced" with a new child
          this.members[i] = child;
+      }
+   }
+
+   evolve(generations){
+      for(let i = 0; i < generations; i++){
+         const pool = this.createMatingPool();
+         this.reproduce(pool);
       }
    }
 }

@@ -18,13 +18,8 @@ describe('randomNo', () => {
 
 describe('randomInt', () => {
 
-    it('should return between 1 and 2 inclusive', () => {
-        const num = randomInt(1, 2);
-        assert.isTrue(num >= 1 && num <= 3);
-    })
-
-    it('should return between 1.1 and 2 inclusive', () => {
-        const num = randomInt(1.1, 2);
-        assert.isTrue(num == 2);
+    it('should return between 1 and 3 exclusive', () => {
+        const num = randomInt(1, 3);
+        assert.isTrue(num >= 1 && num < 3);
     })
 })

@@ -12,3 +12,14 @@ export function randomInt(min, max){
 export function randomBool(){
    return Math.random() < 0.5;
 }
+
+//Comparator, sorts the fitest to the start of the array
+export function compareFitness(a, b){
+   if(a.fitness() > b.fitness()){
+      return -1;
+   }
+   if(a.fitness() < b.fitness()){
+      return 1;
+   }
+   return 0;
+}

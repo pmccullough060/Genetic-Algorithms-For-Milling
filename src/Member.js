@@ -1,14 +1,18 @@
-import { randomBool } from '../src/Utilities.js'; 
+import { randomBool, randomNo } from '../src/Utilities.js'; 
 
 const feedPerTooth = 0.1;
 const toolDia = 10;
+
+//temp sort this out ASAP
+const toolHeight = 40;
+
 const noCuttingEdges = 4;
 const spindleSpeed = 3000;
 
 //these params will be set by the user.....
 const cutLength = 50;
-const cutAxial = 20;
-const cutRadial = 20;
+const cutAxial = 40;
+const cutRadial = 40;
 
 //Max tangential cutting force
 const tangForceMax = 0.05;
@@ -35,15 +39,14 @@ export class Member {
    }
 
    mutate(mutationRate){
-      
       //Mutate radial:
       if(Math.random() < mutationRate){
-         //mutate radial cut
+         this.axial = randomNo(0.01, toolHeight);
+         
       }
-
       //Mutate axial:
       if(Math.random() < mutationRate){
-         //mutate axial cut
+         this.radial = randomNo(0.01, toolDia);
       }
    }
 

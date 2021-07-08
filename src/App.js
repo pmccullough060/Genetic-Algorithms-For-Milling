@@ -10,19 +10,20 @@ function generate(size, mutationRate, generations){
     //Sorting based on fitness
     population.members.sort( compareFitness );
 
-    for(let i = 0; i < population.members.length; i++){
+    for(let i = population.members.length-1; i >= 0; i--){
         const member = population.members[i];
 
         //temp output:
-        console.log(`Member: ${ i + 1 }`);
-        console.log(`Axial: ${ member.axial }`);
-        console.log(`Radial: ${ member.radial }`);
-        console.log(`Axial Passes: ${ member.noPassesAxial() }`);
-        console.log(`Radial Passes: ${ member.noPassesRadial() }`);
-        console.log(`Tangential Force: ${ member.tangentialForce() }`);
-        console.log(`Fitness: ${ member.fitness() }`);
-        console.log();
+        //console.log("///////////////////////////////////////////////")
+        //console.log(`Member: ${ i + 1 }`);
+        //console.log(`Axial: ${ member.axial }`);
+        //console.log(`Radial: ${ member.radial }`);
+        //console.log(`Axial Passes: ${ member.noPassesAxial() }`);
+        //console.log(`Radial Passes: ${ member.noPassesRadial() }`);
+        //console.log(`Tangential Force: ${ member.tangentialForce() }`);
+        //console.log(`Fitness: ${ member.fitness() }`);
+        //console.log();
     }
 }
 
-generate(100, 0.05, 10000);
+generate(20, 0.05, 20);

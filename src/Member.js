@@ -11,8 +11,8 @@ const spindleSpeed = 3000;
 
 //these params will be set by the user.....
 const cutLength = 50;
-const cutAxial = 40;
-const cutRadial = 40;
+const cutAxial = 30;
+const cutRadial = 30;
 
 //Max tangential cutting force
 const tangForceMax = 0.05;

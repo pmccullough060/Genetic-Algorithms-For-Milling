@@ -32,6 +32,7 @@ export class Population {
       return sum;
    }
 
+   //Roulette wheel.
    createMatingPool(){
       const matingPool = [];
       const sumFitness = this.sumFitness();
@@ -40,26 +41,29 @@ export class Population {
       this.members.forEach((m) => {
          
          //fitness proportionate selection:
-         const f= Math.floor((m.fitness() / sumFitness) * 100 ) || 1;
+         const f= Math.floor((m.fitness() / sumFitness) * 100 ) || 0;
          
          //fitter members are more populus in the mating pool:
-         for(let i = 0; i < f; i += 1){
+         for(let i = 0; i < f; i ++){
             matingPool.push(m);
          }
       });
 
       //Pick the best to mate:
-      matingPool.sort( compareFitness );
+      //matingPool.sort( compareFitness );
 
       //Resizing the population keeping the best of a generation
-      const reducedMatingPool = matingPool.slice(0, this.size);
-
-      return reducedMatingPool;
+      //const reducedMatingPool = matingPool.slice(0, this.size);
+      return matingPool;
    }
+
+   //tournament selection
+   //https://cstheory.stackexchange.com/questions/14758/tournament-selection-in-genetic-algorithms
+
 
    reproduce(matingPool){
       //before this step we should potentially reduce the size of the population
-      for (let i = 0; i < matingPool.length; i++){
+      for (let i = 0; i < this.size; i++){
          
          //pick two random members from the mating pool:
          const mum = matingPool[randomInt(0, matingPool.length)];
@@ -79,6 +83,12 @@ export class Population {
    evolve(generations){
       for(let i = 0; i < generations; i++){
          const pool = this.createMatingPool();
+
+         //temp output for debugging:
+         if(i % 2 == 0){
+            console.log(`Generation: ${ i } Fitness: ${ pool[0].fitness() }`)
+         }
+
          this.reproduce(pool);
       }
    }

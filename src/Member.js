@@ -33,20 +33,24 @@ export class Member {
    }
 
    crossover(partner){
-      //we can bias the crossover too if need by changing randomBool method:
-      return randomBool() ? new Member(this.radial, partner.axial) 
-                          : new Member(partner.radial, this.axial);
+      const first = new Member(this.radial, partner.axial);
+      const second = new Member(partner.radial, this.axial);
+      //return the best of the two.
+      return first.fitness() > second.fitness() ? first : second;
    }
 
    mutate(mutationRate){
-      //Mutate radial:
+      //We need to make the mutations somewhat useful 
+      //instead of just producing random values that will create a fitness of 0 by exceeding the tools strength.
+      
       if(Math.random() < mutationRate){
-         this.axial = randomNo(0.01, toolHeight);
-         
-      }
-      //Mutate axial:
-      if(Math.random() < mutationRate){
-         this.radial = randomNo(0.01, toolDia);
+
+         if(randomBool){
+            this.axial = randomNo(this.axial, toolHeight);
+         }
+         else{
+            this.radial = randomNo(toolDia/6, toolDia / 2);
+         }
       }
    }
 
@@ -117,7 +121,7 @@ export class Member {
       var intialFitness = (1 / this.totalCuttingTime() * 100);
 
       //The penalty for poor tool position can be up to 20% of the cutting time where radial = toolDia;
-      var finalFitness = intialFitness - this.poorToolPositionFactor() * intialFitness* 0.2;
+      var finalFitness = intialFitness - this.poorToolPositionFactor() * intialFitness * 0.1;
 
       return finalFitness
    }

@@ -26,4 +26,4 @@ function generate(size, mutationRate, generations){
     }
 }
 
-generate(20, 0.05, 20);
+generate(50, 0.5, 15);

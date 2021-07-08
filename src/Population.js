@@ -23,73 +23,51 @@ export class Population {
       }
    }
 
-   sumFitness(){
-      var sum = 0;
-      for (var i = 0; i < this.members.length; i++){
-         var mem = this.members[i];
-         sum += mem.fitness();
-      }
-      return sum;
-   }
-
-   //Roulette wheel.
-   createMatingPool(){
+   reproduce(){
       const matingPool = [];
-      const sumFitness = this.sumFitness();
-      
-      //the mating pool will
-      this.members.forEach((m) => {
-         
-         //fitness proportionate selection:
-         const f= Math.floor((m.fitness() / sumFitness) * 100 ) || 0;
-         
-         //fitter members are more populus in the mating pool:
-         for(let i = 0; i < f; i ++){
-            matingPool.push(m);
-         }
-      });
-
-      //Pick the best to mate:
-      //matingPool.sort( compareFitness );
-
-      //Resizing the population keeping the best of a generation
-      //const reducedMatingPool = matingPool.slice(0, this.size);
-      return matingPool;
-   }
-
-   //tournament selection
-   //https://cstheory.stackexchange.com/questions/14758/tournament-selection-in-genetic-algorithms
-
-
-   reproduce(matingPool){
-      //before this step we should potentially reduce the size of the population
-      for (let i = 0; i < this.size; i++){
-         
-         //pick two random members from the mating pool:
-         const mum = matingPool[randomInt(0, matingPool.length)];
-         const dad = matingPool[randomInt(0, matingPool.length)];
-
-         //crossover
+      while(matingPool.length < this.size){
+         const mum = this.tournamentSelection(2);
+         const dad = this.tournamentSelection(2);
          const child = mum.crossover(dad);
-
-         //mutation
          child.mutate(this.mutationRate);
 
-         //member is "replaced" with a new child
-         this.members[i] = child;
+         //It is not beneificial to add non-viable members to the gene pool.
+         if(child.fitness() > 0){
+            matingPool.push(child);
+         }
       }
+      this.members = matingPool;
+   }
+
+   //Binary tournament selection:
+   tournamentSelection(tournamentSize){
+      var best = null;
+      for(let i = 0; i < tournamentSize; i++){
+         let index = randomInt(0, this.members.length - 1);
+         const curr = this.members[index];
+         if(best == null || curr.fitness() > best.fitness()){
+            best = curr;
+         }
+      }
+      return best;
    }
 
    evolve(generations){
       for(let i = 0; i < generations; i++){
-         const pool = this.createMatingPool();
+         this.reproduce();
 
-         //temp output for debugging:
-         if(i % 2 == 0){
-            console.log(`Generation: ${ i } Fitness: ${ pool[0].fitness() }`)
+         //test code
+         if(i >= generations/2){
+            this.mutationRate = 0.05;
          }
 
-         this.reproduce(pool);
+         if(i >= generations/4){
+            this.mutationRate = 0.2;
+         }
+
+         console.log(`Generation: ${ i } Fitness: ${ this.members[0].fitness() }`)
       }
    }
+
+   //https://cstheory.stackexchange.com/questions/14758/tournament-selection-in-genetic-algorithms
 }

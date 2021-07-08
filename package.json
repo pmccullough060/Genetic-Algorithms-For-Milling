@@ -10,6 +10,7 @@
   },
   "scripts": {
     "test": "mocha"
+
   },
   "author": "Peter McCullough",
   "license": "ISC",

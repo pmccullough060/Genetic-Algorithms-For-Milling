@@ -11,7 +11,7 @@ const spindleSpeed = 3000;
 
 //these params will be set by the user.....
 const cutLength = 50;
-const cutAxial = 30;
+const cutAxial = 25;
 const cutRadial = 30;
 
 //Max tangential cutting force
@@ -22,27 +22,28 @@ const spefCuttingForce = 1000;
 
 export class Member {
 
-   //would be beneficial if radial and axial where immutable?
    constructor(radial, axial){
 
       this.radial = radial;
       this.axial = axial;
       this.feedPerTooth = feedPerTooth;
-
       this.compensatedFeedPerTooth();
+   }
+
+   static createMember(){
+      const radial = randomNo(0.01, toolDia);
+      const maxAxial = cutAxial <= toolHeight ? cutAxial : toolHeight; 
+      const axial = randomNo(0.01, maxAxial);
+      return new Member(radial, axial);
    }
 
    crossover(partner){
       const first = new Member(this.radial, partner.axial);
       const second = new Member(partner.radial, this.axial);
-      //return the best of the two.
       return first.fitness() > second.fitness() ? first : second;
    }
 
    mutate(mutationRate){
-      //We need to make the mutations somewhat useful 
-      //instead of just producing random values that will create a fitness of 0 by exceeding the tools strength.
-      
       if(Math.random() < mutationRate){
 
          if(randomBool){

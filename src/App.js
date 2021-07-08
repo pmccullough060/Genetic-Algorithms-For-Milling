@@ -14,16 +14,16 @@ function generate(size, mutationRate, generations){
         const member = population.members[i];
 
         //temp output:
-        //console.log("///////////////////////////////////////////////")
-        //console.log(`Member: ${ i + 1 }`);
-        //console.log(`Axial: ${ member.axial }`);
-        //console.log(`Radial: ${ member.radial }`);
-        //console.log(`Axial Passes: ${ member.noPassesAxial() }`);
-        //console.log(`Radial Passes: ${ member.noPassesRadial() }`);
-        //console.log(`Tangential Force: ${ member.tangentialForce() }`);
+        console.log("///////////////////////////////////////////////")
+        console.log(`Member: ${ i + 1 }`);
+        console.log(`Axial: ${ member.axial }`);
+        console.log(`Radial: ${ member.radial }`);
+        console.log(`Axial Passes: ${ member.noPassesAxial() }`);
+        console.log(`Radial Passes: ${ member.noPassesRadial() }`);
+        console.log(`Total Cutting Time: ${ member.totalCuttingTime() }`);
         //console.log(`Fitness: ${ member.fitness() }`);
         //console.log();
     }
 }
 
-generate(50, 0.5, 15);
+generate(50, 0.5, 10);

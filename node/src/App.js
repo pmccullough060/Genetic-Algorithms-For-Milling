@@ -1,8 +1,9 @@
 import { Population } from "../src/Population.js";
+import { Parameters } from "../src/Parameters.js";
 
 function generate(size, mutationRate, generations){
-    //Create a population and evolve for N generations
-    const population = new Population(size, mutationRate, 20, 20);
+    const parameters = new Parameters(20, 20);
+    const population = new Population(size, mutationRate, parameters);
     population.evolve(generations);
 }
 

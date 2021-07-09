@@ -3,18 +3,17 @@ import { randomInt } from '../src/Utilities.js';
 
 export class Population {
 
-   constructor(size, mutationRate, cutRadial, cutAxial){
+   constructor(size, mutationRate, parameters){
       this.size = size;
       this.mutationRate = mutationRate;
-      this.cutRadial = cutRadial;
-      this.cutAxial = cutAxial;
+      this.parameters = parameters;
       this.members = [];
       this.createPopulation();
    }
 
    createPopulation(){
       for(let i = 0; i < this.size; i ++ ){
-         this.members.push(Member.createMember(this.cutRadial, this.cutAxial));
+         this.members.push(Member.createMember(this.parameters));
       }
    }
 

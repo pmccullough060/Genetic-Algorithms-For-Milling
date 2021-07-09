@@ -5,6 +5,8 @@ const toolHeight = 40;
 const noCuttingEdges = 4;
 const spindleSpeed = 3000;
 const tangForceMax = 0.05;
+const spefCuttingForce = 1000;
+const cutLength = 50;
 
 export class Parameters {
     constructor(cutRadial, cutAxial){
@@ -28,5 +30,11 @@ export class Parameters {
     }
     get tangForceMax(){
         return tangForceMax;
+    }
+    get spefCuttingForce(){
+        return spefCuttingForce;
+    }
+    get cutLength(){
+        return cutLength;
     }
 }

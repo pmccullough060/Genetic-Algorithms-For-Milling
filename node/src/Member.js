@@ -1,45 +1,41 @@
 import { randomBool, randomNo } from '../src/Utilities.js'; 
 
+//Tool constants
 const feedPerTooth = 0.1;
 const toolDia = 10;
-
-//temp sort this out ASAP
 const toolHeight = 40;
-
 const noCuttingEdges = 4;
 const spindleSpeed = 3000;
-
-//these params will be set by the user.....
-const cutLength = 50;
-const cutAxial = 25;
-const cutRadial = 30;
-
-//Max tangential cutting force
 const tangForceMax = 0.05;
 
-//Specific cutting force alu
+//Workpiece constants
+const cutLength = 50;
+
+//Material constants
 const spefCuttingForce = 1000;
 
 export class Member {
 
-   constructor(radial, axial){
-
+   constructor(radial, axial, cutRadial, cutAxial){
       this.radial = radial;
       this.axial = axial;
+      this.cutRadial = cutRadial;
+      this.cutAxial = cutAxial;
       this.feedPerTooth = feedPerTooth;
       this.compensatedFeedPerTooth();
    }
 
-   static createMember(){
-      const radial = randomNo(0.01, toolDia);
+   static createMember(cutRadial, cutAxial){
+      const maxRadial = cutRadial <= toolDia ? cutRadial : toolDia;
+      const radial = randomNo(0.01, maxRadial);
       const maxAxial = cutAxial <= toolHeight ? cutAxial : toolHeight; 
       const axial = randomNo(0.01, maxAxial);
-      return new Member(radial, axial);
+      return new Member(radial, axial, cutRadial, cutAxial);
    }
 
    crossover(partner){
-      const first = new Member(this.radial, partner.axial);
-      const second = new Member(partner.radial, this.axial);
+      const first = new Member(this.radial, partner.axial, this.cutRadial, this.cutAxial);
+      const second = new Member(partner.radial, this.axial, this.cutRadial, this.cutAxial);
       return first.fitness() > second.fitness() ? first : second;
    }
 
@@ -70,12 +66,12 @@ export class Member {
 
    noPassesAxial(){
       //cutAxial (mm)
-      return Math.ceil(cutAxial/this.axial);
+      return Math.ceil(this.cutAxial/this.axial);
    }
 
    noPassesRadial(){
       //cutRadial (mm)
-      return Math.ceil(cutRadial/this.radial);
+      return Math.ceil(this.cutRadial/this.radial);
    }
 
    poorToolPositionFactor(){

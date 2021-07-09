@@ -1,18 +1,20 @@
 import { Member } from '../src/Member.js';
-import { randomNo, randomInt, compareFitness } from '../src/Utilities.js'; 
+import { randomInt } from '../src/Utilities.js'; 
 
 export class Population {
 
-   constructor(size, mutationRate){
+   constructor(size, mutationRate, cutRadial, cutAxial){
       this.size = size;
       this.mutationRate = mutationRate;
+      this.cutRadial = cutRadial;
+      this.cutAxial = cutAxial;
       this.members = [];
       this.createPopulation();
    }
 
    createPopulation(){
       for(let i = 0; i < this.size; i ++ ){
-         this.members.push(Member.createMember());
+         this.members.push(Member.createMember(this.cutRadial, this.cutAxial));
       }
    }
 
@@ -53,6 +55,8 @@ export class Population {
             this.mutationRate = 0.01;
          }
 
+         //For debugging purposes...
+         //The population should create an Array[member] for the best of each generation.
          console.log(`Generation: ${ i } Fitness: ${ this.members[0].fitness() }`)
       }
    }

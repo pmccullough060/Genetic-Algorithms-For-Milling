@@ -1,11 +1,21 @@
 import { createScene } from '../src/scene.js'
-import { Member } from '../node/src/Member.js'
 import "../css/main.css";
 
 //creates the three.js scene:
 const renderer = createScene();
 
-//When the window has loaded append the renderer.domElement to the appropriate div.
+//Adding event listeners and append domElements to appropriate elements.
 window.onload = function () {
-    document.getElementById('threescene').appendChild(renderer.domElement);
+    document.getElementById("threescene").appendChild(renderer.domElement);
+    document.getElementById("axialslider").addEventListener("change", updateAxialCut);
   };
+
+function updateAxialCut(event) {
+    document.getElementById("textInput").textContent=event.target.value; 
+    updateScene();
+  }
+
+function updateScene(){
+    console.log(document.getElementById("axialslider").value);
+}
+

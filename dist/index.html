@@ -11,8 +11,22 @@
     <script src="main.js"></script>
 
     <div class="wrapper">
-        <div class="header"></div>
+        <!--Title header-->
+        <div class="header">
+            <h1>GENETIC<span class="notbold">MILLING</span></h1>
+        </div>
+
+        <!--Contains the three.js scene canvas-->
         <div class ="scene" id="threescene"></div>
+
+        <!--Setup parameters for the simulation-->
+        <div class ="simulation" id="simulation">
+            <h4>Axial Cut: </h4>
+            <h4 id="textInput">50</h4>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="50" class="slider" id="axialslider">
+            </div>
+        </div>
     </div>
 
 </body>

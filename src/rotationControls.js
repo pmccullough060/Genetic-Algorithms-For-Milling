@@ -3,11 +3,9 @@ import { Vector3 } from 'three';
 //https://github.com/pmccullough060/Orbit-Control-For-3.js/blob/master/JavaScriptFiles/index.js
 export class rotationControls{
 
-    constructor(inputScene, inputCamera, inputRenderer, inputDocument){
-        this.scene = inputScene;
+    constructor(inputCamera, inputRenderer){
         this.camera = inputCamera;
         this.renderer = inputRenderer;
-        this.document = inputDocument;
     }
 
     Add(){
@@ -36,9 +34,9 @@ export class rotationControls{
             onClickStartY = null;
         }
 
-        this.document.addEventListener("mousedown", onMouseDown);
-        this.document.addEventListener("mouseup", onMouseUp);
-        this.document.addEventListener("mousemove", onMouseMove);
+        this.renderer.domElement.addEventListener("mousedown", onMouseDown);
+        this.renderer.domElement.addEventListener("mouseup", onMouseUp);
+        this.renderer.domElement.addEventListener("mousemove", onMouseMove);
     }
 
     CalculateCameraPositions(deltaX, deltaY){

@@ -22,7 +22,7 @@ export function createScene(){
     addGeometry();
     animate();
     
-    rotationControl = new rotationControls(scene, camera, renderer, document);
+    rotationControl = new rotationControls(camera, renderer);
     rotationControl.Add();
 
     window.addEventListener( 'resize', onWindowResize, false );
@@ -47,8 +47,8 @@ function addLighting(){
 }
 
 function addGeometry(){
-    const geometry = new BoxGeometry(1, 1, 1);
-    const material = new MeshLambertMaterial({color: 0xFFCC00});
+    const geometry = new BoxGeometry(1, 2, 2);
+    const material = new MeshLambertMaterial({color: 0xA91101});
     const mesh = new Mesh(geometry, material);
     scene.add(mesh);
 }

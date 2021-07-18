@@ -55,9 +55,9 @@ export class rotationControls{
 
         phi -= deltaPhi;
 
-        cameraPosition.x = radius * Math.sin(theta) * Math.cos(phi);
+        cameraPosition.z = radius * Math.sin(theta) * Math.cos(phi);
         cameraPosition.y = radius * Math.sin(theta) * Math.sin(phi);
-        cameraPosition.z = radius * Math.cos(theta);
+        cameraPosition.x = radius * Math.cos(theta);
 
         this.camera.position.add(centre);
         this.camera.lookAt(centre);

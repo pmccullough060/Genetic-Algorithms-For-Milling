@@ -21,13 +21,33 @@
 
         <!--Setup parameters for the simulation-->
         <div class ="simulation" id="simulation">
-            <h4>Axial Cut: </h4>
-            <h4 id="textInput">50</h4>
-            <div class="slidecontainer">
-                <input type="range" min="1" max="100" value="50" class="slider" id="axialslider">
+            <!--Cut width-->
+            <div class="sliderInput">
+                <div class="sliderLabel">
+                    <h4 >Cut Width:</h4>
+                    <h4 style="color: #EE4B2B;" id="cutWidth">50</h4>
+                </div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="50" value="30" class="slider" id="cutWidthSlider">
+                </div>
             </div>
-        </div>
-    </div>
+            <!--Cut depth-->
+            <div class="sliderInput" id="cutwidth">
+                <div class="sliderLabel">
+                    <h4>Cut Depth: </h4>
+                    <h4 style="color: #EE4B2B;" id="cutDepth">50</h4>
+                </div>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="50" value="30" class="slider" id="cutDepthSlider">
+                </div>
+            </div>
 
+            <button class="button">Run Simulation</button>
+        </div>
+
+        <!--Simulation settings-->
+        <div class ="genetic" id="genetic"></div>
+
+    </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-import { createScene } from '../src/scene.js'
+import { createScene, updateScene } from '../src/scene.js';
 import "../css/main.css";
 
 //creates the three.js scene:
@@ -6,28 +6,26 @@ const renderer = createScene();
 
 //Adding event listeners and append domElements to appropriate elements.
 window.onload = function () {
-    document.getElementById("threescene").appendChild(renderer.domElement);
-    document.getElementById("cutWidthSlider").addEventListener("input", updateCutWidth);
-    document.getElementById("cutDepthSlider").addEventListener("input", updateCutDepth);
-  };
+	document.getElementById("threescene").appendChild(renderer.domElement);
+	document.getElementById("cutWidthSlider").addEventListener("input", updateCutWidth);
+	document.getElementById("cutDepthSlider").addEventListener("input", updateCutDepth);
+
+	//Load the geometry after the window has loaded to increase performance:
+	updateGeometry();
+};
 
 function updateCutWidth(event) {
-    document.getElementById("cutWidth").textContent = event.target.value; 
-    updateScene();
-  }
-
-function updateCutDepth(event){
-  document.getElementById("cutDepth").textContent = event.target.value;
+	document.getElementById("cutWidth").textContent = event.target.value;
+	updateGeometry()
 }
 
-function updateGeometry(){
-  const cutWidth = document.getElementById("cutWidthSlider").value;
-  const cutDepth = document.getElementById("cutDepthSlider").value;
-
-  //here is where we update the three.js scene.
+function updateCutDepth(event) {
+	document.getElementById("cutDepth").textContent = event.target.value;
+	updateGeometry();
 }
 
-function updateScene(){
-    console.log(document.getElementById("cutDepthSlider").value);
+function updateGeometry() {
+	const cutWidth = document.getElementById("cutWidthSlider").value;
+	const cutDepth = document.getElementById("cutDepthSlider").value;
+	updateScene(cutWidth, cutDepth);
 }
-

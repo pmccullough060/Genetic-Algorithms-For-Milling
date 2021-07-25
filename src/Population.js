@@ -1,5 +1,6 @@
 import { Member } from '../src/Member.js';
-import { randomInt } from '../src/Utilities.js'; 
+import { randomInt, compareFitness } from '../src/Utilities.js'; 
+
 
 export class Population {
 
@@ -44,19 +45,39 @@ export class Population {
    }
 
    evolve(generations){
+      const topMemberEachGeneration = [];
+
       for(let i = 0; i < generations; i++){
          this.reproduce();
 
          if(i >= generations / 4){
             this.mutationRate = 0.02;
          }
+
          if(i >= generations / 2){
             this.mutationRate = 0.01;
          }
 
-         //For debugging purposes...
-         //The population should create an Array[member] for the best of each generation.
-         console.log(`Generation: ${ i } Fitness: ${ this.members[0].fitness() }`)
+         const bestMemberOfGeneration = this.currentBestMember();
+         topMemberEachGeneration.push(bestMemberOfGeneration);
+
+         //For debugging purposes:
+         console.log(`Generation: ${ i } Fitness: ${ this.currentBestMember().fitness() }`)
       }
+
+      return topMemberEachGeneration;
+   }
+
+   currentBestMember(){
+      var fitestMember = this.members[0];
+
+      for(var i = 1; i < this.members.length; i++){
+         var currentMember = this.members[i];
+         var currentMemberFitness = currentMember.fitness();
+         if(currentMemberFitness > fitestMember.fitness()){
+            fitestMember = currentMember;
+         }
+      }
+      return fitestMember;
    }
 }

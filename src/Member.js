@@ -34,7 +34,7 @@ export class Member {
       if(Math.random() < mutationRate){
 
          if(randomBool){
-            this.axial = randomNo(this.axial, this.parameters.toolHeight);
+            this.axial = randomNo(this.axial, this.parameters.cutAxial);
          }
          else{
             this.radial = randomNo(this.parameters.toolDia/6, this.parameters.toolDia / 2);

@@ -37,7 +37,7 @@ function updateGeometry() {
 function runSimulation() {
 
 	//Simulation constants:
-	const populationSize = 50;
+	const populationSize = 100;
 	const mutationRate = 0.5;
 	const generations = 10;
 
@@ -52,10 +52,9 @@ function runSimulation() {
 	const population = new Population(populationSize, mutationRate, parameters);
 
 	//Start the evolution process:
-	population.evolve(generations);
+	const results = population.evolve(generations);
 
-	//population.evolve should ideally return an array of the best member for each generation:
-
-
+	//temp for debugging purposes:
+	console.log(results);
 }
 

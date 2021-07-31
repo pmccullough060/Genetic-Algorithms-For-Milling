@@ -3,8 +3,6 @@ import { Population } from '../src/Population.js'
 import { Parameters } from '../src/Parameters.js';
 import "../css/main.css";
 
-
-
 //creates the three.js scene:
 const renderer = createScene();
 
@@ -13,7 +11,8 @@ window.onload = function () {
 	document.getElementById("threescene").appendChild(renderer.domElement);
 	document.getElementById("cutWidthSlider").addEventListener("input", updateCutWidth);
 	document.getElementById("cutDepthSlider").addEventListener("input", updateCutDepth);
-	document.getElementById("button").onclick = runSimulation;
+	document.getElementById("button").onclick = updateGeometry;
+	
 	//Load the geometry after the window has loaded to increase performance:
 	updateGeometry();
 };
@@ -29,21 +28,24 @@ function updateCutDepth(event) {
 }
 
 function updateGeometry() {
-	const cutWidth = document.getElementById("cutWidthSlider").value;
-	const cutDepth = document.getElementById("cutDepthSlider").value;
-	updateScene(cutWidth, cutDepth);
+
+	//Getting the slider values from the DOM:
+	var cutWidth = document.getElementById("cutWidthSlider").value;
+	var cutDepth = document.getElementById("cutDepthSlider").value;
+
+	//Run the genetic alogorithm to update the scene:
+	var bestMember = runGeneticAlgorithm(cutWidth, cutDepth);
+
+	//We use our best member to update the scene:
+	updateScene(bestMember);
 }
 
-function runSimulation() {
+function runGeneticAlgorithm(cutWidth, cutDepth) {
 
 	//Simulation constants:
 	const populationSize = 100;
-	const mutationRate = 0.5;
-	const generations = 10;
-
-	//getting the current cutting parameters:
-	const cutWidth = document.getElementById("cutWidthSlider").value;
-	const cutDepth = document.getElementById("cutDepthSlider").value;
+	const mutationRate = 0.05;
+	const generations = 50;
 
 	//create a new parameters object:
 	const parameters = new Parameters(cutWidth, cutDepth);
@@ -56,5 +58,8 @@ function runSimulation() {
 
 	//temp for debugging purposes:
 	console.log(results);
+
+	//Return the last iteration
+	return results[results.length - 1];
 }
 

@@ -1,4 +1,4 @@
-var THREE = require('three');
+import * as THREE from 'three';
 var OrbitControls = require('three-orbit-controls')(THREE)
 
 let camera, scene, renderer;
@@ -9,7 +9,7 @@ const meshName = "StockToCut";
 export function createScene() {
 	scene = new THREE.Scene();
 	renderer = new THREE.WebGLRenderer({ alpha: true });
-	renderer.setSize(window.innerWidth / 2.5, window.innerHeight / 2.5);
+	renderer.setSize(window.innerWidth / 2.25, window.innerHeight / 2.25);
 
 	addCamera();
 	addLighting();
@@ -43,7 +43,14 @@ function addLighting() {
 }
 
 //Adds the initial geometry:
-function addGeometry(cutWidth, cutHeight) {
+function addGeometry(member) {
+
+	//Getting the initial cutting parameters for the member:
+	const parameters = member.parameters;
+	var cutWidth = parameters.cutRadial;
+	var cutHeight = parameters.cutAxial;
+
+	//Dimensions of the workpiece:
 	const height = 2;
 	const width = 2;
 
@@ -71,18 +78,37 @@ function addGeometry(cutWidth, cutHeight) {
 	const mesh = new THREE.Mesh(geometry, material);
 	mesh.name = meshName;
 
+	//now we need to add the cuts, each cut will be denoted as a rectangle that can be selected
+	
+	const cutsOriginX = width - cutWidth;
+	const cutsOriginY = height - cutHeight; 
+
+	const noCutsWidth = member.noPassesRadial();
+	const noCutsHeight = member.noPassesAxial();
+
+	addToolPath(cutsOriginX, cutsOriginY, noCutsWidth, noCutsHeight, extrudeSettings.depth);
+
 	return mesh;
 }
 
-//We need another method here to show the cutting path once it has been calculated!
-function addToolPath(cuttingParameters){
-	//TODO: here is where we will adding the cutting path to the scene.
+//Adding the toolpaths to the scene:
+function addToolPath(cutsOriginX, cutsOriginY, noCutsWidth, noCutsHeight, cutLength){
+
+	for(var i = 0; i < noCutsHeight; i++){
+
+		//Here we want to loop through all of the width cuts
+
+		for(var j = 0; i < noCutsWidth; j++){
+
+			//Iterating all of the height cuts
+
+		}
+	}
 }
 
+export function updateScene(member) {
 
-export function updateScene(cutWidth, cutDepth) {
-
-	//Removing the existing object from the scene, may be a more performant way to do this:
+	//Removing the existing object from the scene:
 	const existingGeometry = scene.getObjectByName(meshName);
 
 	if (existingGeometry != null) {
@@ -92,9 +118,10 @@ export function updateScene(cutWidth, cutDepth) {
 	}
 
 	//Add Updated geometry to the scene:
-	const mesh = addGeometry(cutWidth, cutDepth);
+	const mesh = addGeometry(member);
 
 	//Add the new mesh to the scene:
+	//this should probably be moved to the addGeometry Method:
 	scene.add(mesh);
 }
 

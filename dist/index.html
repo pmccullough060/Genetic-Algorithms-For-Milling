@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Genetic Algorithms For Milling</title>
     <link rel="stylesheet" href="../css/main.css">
 </head>
+
 <body>
     <script src="main.js"></script>
 
@@ -18,14 +20,14 @@
         </div>
 
         <!--Contains the three.js scene canvas-->
-        <div class ="scene" id="threescene"></div>
+        <div class="scene" id="threescene"></div>
 
         <!--Setup parameters for the simulation-->
-        <div class ="simulation" id="simulation">
+        <div class="simulation" id="simulation">
             <!--Cut width-->
             <div class="sliderInput">
                 <div class="sliderLabel">
-                    <h4 >Cut Width:</h4>
+                    <h4>Cut Width:</h4>
                     <h4 style="color: #EE4B2B;" id="cutWidth">50</h4>
                 </div>
                 <div class="slidecontainer">
@@ -46,12 +48,13 @@
             <button class="button" id="button">Run Simulation</button>
         </div>
 
-        <!--Simulation settings-->
-        <div class ="genetic" id="genetic">
-            <div class="results">
-                
-                <header class="resultsHeader">Results</header>
-                
+        <!--Simulation results-->
+        <div class="results" id="genetic">
+
+            <header class="resultsHeader">Result</header>
+
+            <!-- Give this div some css properties-->
+            <div>
                 <div class="resultsSub">
                     <h1 class="resultsLabel">Generations :</h1>
                     <h4 id="generationsResult">5</h4>
@@ -77,7 +80,8 @@
                     <h4 id="generationsResult">30</h4>
                 </div>
             </div>
-        </div>
+        </div>        
     </div>
 </body>
+
 </html>

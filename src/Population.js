@@ -21,8 +21,8 @@ export class Population {
    reproduce(){
       const matingPool = [];
       while(matingPool.length < this.size){
-         const mum = this.tournamentSelection(2);
-         const dad = this.tournamentSelection(2);
+         const mum = this.tournamentSelection(3);
+         const dad = this.tournamentSelection(3);
          const child = mum.crossover(dad);
          child.mutate(this.mutationRate);
          if(child.fitness() > 0){
@@ -50,19 +50,20 @@ export class Population {
       for(let i = 0; i < generations; i++){
          this.reproduce();
 
+         //temp code delete later....
          if(i >= generations / 4){
-            this.mutationRate = 0.02;
+            this.mutationRate = 0.0022;
          }
 
          if(i >= generations / 2){
-            this.mutationRate = 0.01;
+            this.mutationRate = 0.001;
          }
 
          const bestMemberOfGeneration = this.currentBestMember();
          topMemberEachGeneration.push(bestMemberOfGeneration);
 
          //For debugging purposes:
-         console.log(`Generation: ${ i } Fitness: ${ this.currentBestMember().fitness() }`)
+         console.log(`Generation: ${ i } Fitness: ${ bestMemberOfGeneration.fitness() }`)
       }
 
       return topMemberEachGeneration;
@@ -71,7 +72,7 @@ export class Population {
    currentBestMember(){
       var fitestMember = this.members[0];
 
-      for(var i = 1; i < this.members.length; i++){
+      for(var i = 0; i < this.members.length; i++){
          var currentMember = this.members[i];
          var currentMemberFitness = currentMember.fitness();
          if(currentMemberFitness > fitestMember.fitness()){

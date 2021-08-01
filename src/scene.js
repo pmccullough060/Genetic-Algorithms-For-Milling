@@ -16,7 +16,7 @@ export function createScene() {
 	animate();
 
 	const controls = new OrbitControls(camera, renderer.domElement);
-	controls.enableZoom = false;
+	//controls.enableZoom = false;
 
 	var axisHelper = new THREE.AxesHelper(3);
 	scene.add(axisHelper);
@@ -27,9 +27,9 @@ export function createScene() {
 }
 
 function addCamera() {
-	camera = new THREE.PerspectiveCamera(60, (window.innerWidth / 2.5) / (window.innerHeight / 2.5), 1, 1000);
+	camera = new THREE.PerspectiveCamera(60, (window.innerWidth / 2.5) / (window.innerHeight / 2.5), 1, 10000);
 	//camera.up = new THREE.Vector3(0, 1, 0);
-	camera.position.set(4, 4, 4);
+	camera.position.set(300, 300, 300);
 	var centre = new THREE.Vector3();
 	camera.lookAt(centre);
 }
@@ -37,8 +37,8 @@ function addCamera() {
 function addLighting() {
 	const ambientLight = new THREE.AmbientLight(0x222222);
 	scene.add(ambientLight);
-	const pointLightOne = new THREE.PointLight(0x222222, 12, 100);
-	pointLightOne.position.set(5, 5, 5);
+	const pointLightOne = new THREE.PointLight(0x222222, 12, 0, 1);
+	pointLightOne.position.set(200, 200, 200);
 	scene.add(pointLightOne);
 }
 
@@ -51,12 +51,12 @@ function addGeometry(member) {
 	var cutHeight = parameters.cutAxial;
 
 	//Dimensions of the workpiece:
-	const height = 2;
-	const width = 2;
+	const height = 100;
+	const width = 100;
 
 	//50 is the max value of the slider - should this be percentage in future etc.
-	cutWidth = cutWidth / 50;
-	cutHeight = cutHeight / 50;
+	//cutWidth = cutWidth / 50;
+	//cutHeight = cutHeight / 50;
 
 	const shape = new THREE.Shape();
 	shape.moveTo(0, 0);
@@ -69,7 +69,7 @@ function addGeometry(member) {
 
 	const extrudeSettings = {
 		steps: 10,
-		depth: 2,
+		depth: 150,
 		bevelEnabled: false,
 	}
 
@@ -80,42 +80,72 @@ function addGeometry(member) {
 
 	//now we need to add the cuts, each cut will be denoted as a rectangle that can be selected
 	
-	const cutsOriginX = width - cutWidth;
-	const cutsOriginY = height - cutHeight; 
-
 	const noCutsWidth = member.noPassesRadial();
 	const noCutsHeight = member.noPassesAxial();
 
-	addToolPath(cutsOriginX, cutsOriginY, noCutsWidth, noCutsHeight, extrudeSettings.depth);
+	addToolPath(member, width, height);
 
 	return mesh;
 }
 
 //Adding the toolpaths to the scene:
-function addToolPath(cutsOriginX, cutsOriginY, noCutsWidth, noCutsHeight, cutLength){
+function addToolPath(member, width, height ){
+
+	//remember the cut width was intially scaled (lol)
+
+	//Getting require values from parameters object:
+	const parameters = member.parameters;
+
+	const noCutsWidth = member.noPassesRadial();
+	const noCutsHeight = member.noPassesAxial();
+
+	const cutsOriginX = width - parameters.cutRadial;
+	const cutsOriginY = height - parameters.cutAxial;
+
+	const widthIncrement = parameters.cutRadial / noCutsWidth;
+	const heightIncrement = parameters.cutAxial / noCutsHeight;
 
 	for(var i = 0; i < noCutsHeight; i++){
 
 		//Here we want to loop through all of the width cuts
 
-		for(var j = 0; i < noCutsWidth; j++){
+		for(var j = 0; j < noCutsWidth; j++){
 
-			//Iterating all of the height cuts
+			//adding the geometry for the width cuts:#
+			//Depth is temporarily being set from a hard coded variable:
+			var toolPath = new THREE.BoxBufferGeometry(widthIncrement, heightIncrement, 150);
+			
+			var widthOffset = cutsOriginX + j * widthIncrement + widthIncrement / 2;
+			var heightOffset = cutsOriginY +  i * heightIncrement + heightIncrement / 2;
 
+			toolPath.translate(widthOffset, heightOffset, 75);
+			
+			var material = new THREE.MeshLambertMaterial({ color: 0x808080, transparent:true, opacity: 0.5 });
+			var toolPathMesh = new THREE.Mesh( toolPath, material );
+
+			scene.add( toolPathMesh );
 		}
 	}
 }
 
 export function updateScene(member) {
 
-	//Removing the existing object from the scene:
-	const existingGeometry = scene.getObjectByName(meshName);
+	//Remove all objects in scene:
+	for( var i = scene.children.length - 1; i >= 0; i--) { 
+		var child = scene.children[i];
+		if(child.type === "Mesh"){
+			scene.remove(child); 
+		}
+   }
 
-	if (existingGeometry != null) {
-		existingGeometry.geometry.dispose();
-		existingGeometry.material.dispose();
-		scene.remove(existingGeometry);
-	}
+	//Removing the existing object from the scene:
+	//const existingGeometry = scene.getObjectByName(meshName);
+
+	//if (existingGeometry != null) {
+		//existingGeometry.geometry.dispose();
+		//existingGeometry.material.dispose();
+		//scene.remove(existingGeometry);
+	//}
 
 	//Add Updated geometry to the scene:
 	const mesh = addGeometry(member);

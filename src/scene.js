@@ -3,13 +3,16 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 
 let camera, scene, renderer;
 
-const meshName = "StockToCut";
+var HorizontalAspect = window.innerWidth / 2;
 
-//add cut width and cut height as input parameters: 
+//this will change based on if expanded mode is used
+var VerticalAspect = window.innerHeight /1.5;
+
 export function createScene() {
+
 	scene = new THREE.Scene();
 	renderer = new THREE.WebGLRenderer({ alpha: true });
-	renderer.setSize(window.innerWidth / 2.25, window.innerHeight / 2.25);
+	renderer.setSize(window.innerWidth / 2, window.innerHeight / 1);
 
 	addCamera();
 	addLighting();
@@ -27,8 +30,7 @@ export function createScene() {
 }
 
 function addCamera() {
-	camera = new THREE.PerspectiveCamera(60, (window.innerWidth / 2.5) / (window.innerHeight / 2.5), 1, 10000);
-	//camera.up = new THREE.Vector3(0, 1, 0);
+	camera = new THREE.PerspectiveCamera(60, (window.innerWidth/2) / (window.innerHeight), 1, 10000);
 	camera.position.set(300, 300, 300);
 	var centre = new THREE.Vector3();
 	camera.lookAt(centre);
@@ -54,10 +56,6 @@ function addGeometry(member) {
 	const height = 100;
 	const width = 100;
 
-	//50 is the max value of the slider - should this be percentage in future etc.
-	//cutWidth = cutWidth / 50;
-	//cutHeight = cutHeight / 50;
-
 	const shape = new THREE.Shape();
 	shape.moveTo(0, 0);
 	shape.lineTo(width, 0);
@@ -76,16 +74,11 @@ function addGeometry(member) {
 	const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 	const material = new THREE.MeshLambertMaterial({ color: 0x037584 });
 	const mesh = new THREE.Mesh(geometry, material);
-	mesh.name = meshName;
 
-	//now we need to add the cuts, each cut will be denoted as a rectangle that can be selected
-	
-	const noCutsWidth = member.noPassesRadial();
-	const noCutsHeight = member.noPassesAxial();
-
+	//Adding the tool paths:
 	addToolPath(member, width, height);
 
-	return mesh;
+	scene.add(mesh);
 }
 
 //Adding the toolpaths to the scene:
@@ -114,7 +107,7 @@ function addToolPath(member, width, height ){
 			//adding the geometry for the width cuts:#
 			//Depth is temporarily being set from a hard coded variable:
 			var toolPath = new THREE.BoxBufferGeometry(widthIncrement, heightIncrement, 150);
-			
+
 			var widthOffset = cutsOriginX + j * widthIncrement + widthIncrement / 2;
 			var heightOffset = cutsOriginY +  i * heightIncrement + heightIncrement / 2;
 
@@ -130,7 +123,7 @@ function addToolPath(member, width, height ){
 
 export function updateScene(member) {
 
-	//Remove all objects in scene:
+	//Remove all Mesh objects in scene:
 	for( var i = scene.children.length - 1; i >= 0; i--) { 
 		var child = scene.children[i];
 		if(child.type === "Mesh"){
@@ -138,21 +131,12 @@ export function updateScene(member) {
 		}
    }
 
-	//Removing the existing object from the scene:
-	//const existingGeometry = scene.getObjectByName(meshName);
-
-	//if (existingGeometry != null) {
-		//existingGeometry.geometry.dispose();
-		//existingGeometry.material.dispose();
-		//scene.remove(existingGeometry);
-	//}
-
 	//Add Updated geometry to the scene:
 	const mesh = addGeometry(member);
 
 	//Add the new mesh to the scene:
 	//this should probably be moved to the addGeometry Method:
-	scene.add(mesh);
+	//scene.add(mesh);
 }
 
 function animate() {
@@ -160,6 +144,7 @@ function animate() {
 	var frameId = window.requestAnimationFrame(animate);
 }
 
+//this method needs to be updated etc.
 function onWindowResize() {
 	camera.aspect = (window.innerWidth / 3) / (window.innerHeight / 3);
 	camera.updateProjectionMatrix();

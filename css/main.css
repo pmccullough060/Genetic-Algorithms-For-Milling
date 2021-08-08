@@ -17,25 +17,28 @@ canvas{
 }
 
 .header {
-    grid-column: 2;
+    grid-column: 1/ -1;
     grid-row: 1;
     font-size: 22px;
+    display: flex;
+    justify-content: left;
 }
 
 .scene {
-    border-radius: 10px;
-    grid-column: 2;
-    grid-row: 2;
+    grid-column: 1/ -1;
+    grid-row: 1;
     display: flex;
     justify-content: center;
-    box-shadow: 0 0 10px gray;
 }
 
 .simulation {
-    margin-top: 10px;
+    margin: 10px;
+    max-width: 500px;
+    min-height: 200px;
     border-radius: 10px;
-    grid-column: 2;
-    grid-row: 3;
+    height: 150px;
+    grid-column: 1;
+    grid-row: 2;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -98,10 +101,11 @@ canvas{
 }
 
 .results {
-    margin-top: 10px;
+    margin: 10px;
+    min-width: 250px;
     border-radius: 10px;
     grid-column: 2;
-    grid-row: 4;
+    grid-row: 2;
     box-shadow: 0 0 10px gray;
 }
 
@@ -162,6 +166,15 @@ canvas{
     background-color: #04616d;
     transform: translateY(1px);
 }
+
+.inputResult{
+    grid-column: 1/-1;
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 
 .notbold{
     font-weight:normal;

@@ -3,16 +3,16 @@ var OrbitControls = require('three-orbit-controls')(THREE)
 
 let camera, scene, renderer;
 
-var HorizontalAspect = window.innerWidth / 2;
+var HorizontalAspect = window.innerWidth;
 
 //this will change based on if expanded mode is used
-var VerticalAspect = window.innerHeight /1.5;
+var VerticalAspect = window.innerHeight - 200;
 
 export function createScene() {
 
 	scene = new THREE.Scene();
 	renderer = new THREE.WebGLRenderer({ alpha: true });
-	renderer.setSize(window.innerWidth / 2, window.innerHeight / 1);
+	renderer.setSize(HorizontalAspect, VerticalAspect);
 
 	addCamera();
 	addLighting();
@@ -30,7 +30,7 @@ export function createScene() {
 }
 
 function addCamera() {
-	camera = new THREE.PerspectiveCamera(60, (window.innerWidth/2) / (window.innerHeight), 1, 10000);
+	camera = new THREE.PerspectiveCamera(60, (HorizontalAspect) / (VerticalAspect), 1, 10000);
 	camera.position.set(300, 300, 300);
 	var centre = new THREE.Vector3();
 	camera.lookAt(centre);
@@ -133,10 +133,6 @@ export function updateScene(member) {
 
 	//Add Updated geometry to the scene:
 	const mesh = addGeometry(member);
-
-	//Add the new mesh to the scene:
-	//this should probably be moved to the addGeometry Method:
-	//scene.add(mesh);
 }
 
 function animate() {
@@ -146,8 +142,8 @@ function animate() {
 
 //this method needs to be updated etc.
 function onWindowResize() {
-	camera.aspect = (window.innerWidth / 3) / (window.innerHeight / 3);
+	camera.aspect = (window.innerWidth-200) / (VerticalAspect);
 	camera.updateProjectionMatrix();
-	renderer.setSize((window.innerWidth / 3), (window.innerHeight / 3));
+	renderer.setSize((window.innerWidth-200), (VerticalAspect));
 }
 

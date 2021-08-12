@@ -1,7 +1,6 @@
 {
   "name": "geneticalgorithmsformilling",
   "version": "1.0.0",
-  "type": "module",
   "description": "Simple shoulder milling calculations using genetic algorithms",
   "private": true,
   "scripts": {

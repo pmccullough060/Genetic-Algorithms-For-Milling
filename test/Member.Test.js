@@ -1,4 +1,7 @@
-import { assert } from 'chai';
+//import might not work unless:
+
+//The test projects will need to use require as these will not be used by webpack, but setting type: module in the packages.config mucks up webpack!
+import  { assert } from 'chai';
 import { Member } from '../src/Member.js';
 
 describe('compensatedFeedPerTooth', () => {
@@ -36,7 +39,7 @@ describe('noRadialPasses', () => {
    //Cut radial depth is greater than or equal to tooldia / 2:
    it('should return 2', () => {
       const member = new Member(10,10,20,20);
-      assert.strictEqual(2, member.noPassesRadial());
+      axialassert.strictEqual(2, member.noPassesRadial());
    });
 
    //Cut radial depth is less than the tooldia / 2:

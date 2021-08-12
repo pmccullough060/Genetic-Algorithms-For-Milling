@@ -6,7 +6,7 @@ let camera, scene, renderer;
 var HorizontalAspect = window.innerWidth;
 
 //this will change based on if expanded mode is used
-var VerticalAspect = window.innerHeight - 200;
+var VerticalAspect = window.innerHeight - 250;
 
 export function createScene() {
 
@@ -141,9 +141,10 @@ function animate() {
 }
 
 //this method needs to be updated etc.
+//this is wrong we should be changing the vertical aspect!
 function onWindowResize() {
-	camera.aspect = (window.innerWidth-200) / (VerticalAspect);
+	camera.aspect = (window.innerWidth-250) / (VerticalAspect);
 	camera.updateProjectionMatrix();
-	renderer.setSize((window.innerWidth-200), (VerticalAspect));
+	renderer.setSize((window.innerWidth-250), (VerticalAspect));
 }
 

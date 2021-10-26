@@ -33,8 +33,9 @@ canvas{
 
 .simulation {
     margin: 10px;
-    max-width: 500px;
+    width: 70%;
     min-height: 200px;
+    min-width: 250px;
     border-radius: 10px;
     height: 150px;
     grid-column: 1;
@@ -103,9 +104,23 @@ canvas{
 .results {
     margin: 10px;
     min-width: 250px;
+    width: 30%;
     border-radius: 10px;
     grid-column: 2;
     grid-row: 2;
+    box-shadow: 0 0 10px gray;
+}
+
+.about {
+    margin: 10px;
+    min-height: 200px;
+    border-radius: 10px;
+    height: 150px;
+    grid-column: 2;
+    grid-row: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     box-shadow: 0 0 10px gray;
 }
 
@@ -168,13 +183,20 @@ canvas{
 }
 
 .inputResult{
-    grid-column: 1/-1;
+    grid-column: 2;
     grid-row: 2;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap:nowrap;
 }
 
+@media (max-width: 1000px) {
+
+    .inputResult {
+          flex-wrap: wrap;
+     }
+
+}
 
 .notbold{
     font-weight:normal;

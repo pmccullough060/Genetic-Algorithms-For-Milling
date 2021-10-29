@@ -145,12 +145,12 @@ canvas{
     height: 15px;
 }
 
-.graph {
-    margin-top: 10px;
-    border-radius: 10px;
-    grid-column: 2;
-    grid-row: 5;
-    box-shadow: 0 0 10px gray;
+.aboutButton {
+    grid-column: 3;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .resultsLabel {
@@ -161,6 +161,7 @@ canvas{
 .button {
     margin-top: 5px;
     margin-bottom: 15px;
+    height: 50px;
     padding: 10px 10px;
     font-weight: bold;
     font-size: 16px;

@@ -22,74 +22,81 @@
         <!--Contains the three.js scene canvas-->
         <div class="scene" id="threescene"></div>
 
-
         <!--InputResult-->
         <div class="inputResult" id="inputResult">
             <!--Setup parameters for the simulation-->
-        <div class="simulation" id="simulation">
-            <!--Cut width-->
-            <div class="sliderInput">
-                <div class="sliderLabel">
-                    <h4>Cut Width:</h4>
-                    <h4 style="color: #EE4B2B;" id="cutWidth">50</h4>
+            <div class="simulation" id="simulation">
+                <!--Cut width-->
+                <div class="sliderInput">
+                    <div class="sliderLabel">
+                        <h4>Cut Width:</h4>
+                        <h4 style="color: #EE4B2B;" id="cutWidth">50</h4>
+                    </div>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="50" value="30" class="slider" id="cutWidthSlider">
+                    </div>
                 </div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="50" value="30" class="slider" id="cutWidthSlider">
+                <!--Cut depth-->
+                <div class="sliderInput" id="cutwidth">
+                    <div class="sliderLabel">
+                        <h4>Cut Depth: </h4>
+                        <h4 style="color: #EE4B2B;" id="cutDepth">50</h4>
+                    </div>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="50" value="30" class="slider" id="cutDepthSlider">
+                    </div>
                 </div>
-            </div>
-            <!--Cut depth-->
-            <div class="sliderInput" id="cutwidth">
-                <div class="sliderLabel">
-                    <h4>Cut Depth: </h4>
-                    <h4 style="color: #EE4B2B;" id="cutDepth">50</h4>
-                </div>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="50" value="30" class="slider" id="cutDepthSlider">
-                </div>
+
+                <button class="button" id="button">Run Simulation</button>
             </div>
 
-            <button class="button" id="button">Run Simulation</button>
+            <!--Simulation results-->
+            <div class="results" id="genetic">
+
+                <header class="resultsHeader">Result</header>
+
+                <!-- Give this div some css properties-->
+                <div>
+                    <div class="resultsSub">
+                        <h1 class="resultsLabel">Generations :</h1>
+                        <h4 id="generationsResult">5</h4>
+                    </div>
+                    <div class="resultsSub">
+                        <h1 class="resultsLabel">Fitness :</h1>
+                        <h4 id="generationsResult">10</h4>
+                    </div>
+                    <div class="resultsSub">
+                        <h1 class="resultsLabel">Width Cuts :</h1>
+                        <h4 id="generationsResult">15</h4>
+                    </div>
+                    <div class="resultsSub">
+                        <h1 class="resultsLabel">Height Cuts :</h1>
+                        <h4 id="generationsResult">20</h4>
+                    </div>
+                    <div class="resultsSub">
+                        <h1 class="resultsLabel">Machining Time :</h1>
+                        <h4 id="generationsResult">25</h4>
+                    </div>
+                    <div class="resultsSub">
+                        <h1 class="resultsLabel">Tangetial Cutting Force :</h1>
+                        <h4 id="generationsResult">30</h4>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
-        <!--Simulation results-->
-        <div class="results" id="genetic">
-
-            <header class="resultsHeader">Result</header>
-
-            <!-- Give this div some css properties-->
+        <div class="aboutButton">
             <div>
-                <div class="resultsSub">
-                    <h1 class="resultsLabel">Generations :</h1>
-                    <h4 id="generationsResult">5</h4>
-                </div>
-                <div class="resultsSub">
-                    <h1 class="resultsLabel">Fitness :</h1>
-                    <h4 id="generationsResult">10</h4>
-                </div>
-                <div class="resultsSub">
-                    <h1 class="resultsLabel">Width Cuts :</h1>
-                    <h4 id="generationsResult">15</h4>
-                </div>
-                <div class="resultsSub">
-                    <h1 class="resultsLabel">Height Cuts :</h1>
-                    <h4 id="generationsResult">20</h4>
-                </div>
-                <div class="resultsSub">
-                    <h1 class="resultsLabel">Machining Time :</h1>
-                    <h4 id="generationsResult">25</h4>
-                </div>
-                <div class="resultsSub">
-                    <h1 class="resultsLabel">Tangetial Cutting Force :</h1>
-                    <h4 id="generationsResult">30</h4>
-                </div>
+                hello
             </div>
-        </div>        
-        </div>  
-        
+        </div>
+
         <div class="about">
             hello blah
         </div>
-        
+
     </div>
 </body>
 

@@ -12,7 +12,7 @@ window.onload = function () {
 	document.getElementById("cutWidthSlider").addEventListener("input", updateCutWidth);
 	document.getElementById("cutDepthSlider").addEventListener("input", updateCutDepth);
 	document.getElementById("button").onclick = updateGeometry;
-	
+
 	//Load the geometry after the window has loaded to increase performance:
 	updateGeometry();
 };
@@ -27,6 +27,16 @@ function updateCutDepth(event) {
 	updateGeometry();
 }
 
+function updateResult(bestMember) {
+	document.getElementById("generationsResult").innerHTML = bestMember.generations;
+	document.getElementById("fitnessResult").innerHTML = Math.round(bestMember.fitness());
+	document.getElementById("widthCutResult").innerHTML = Math.round(bestMember.noPassesRadial());
+	document.getElementById("heightCutResult").innerHTML = Math.round(bestMember.noPassesAxial());
+	document.getElementById("machiningTimeResult").innerHTML = Number.parseFloat(bestMember.totalCuttingTime()).toPrecision(2);
+	document.getElementById("cutForceResult").innerHTML = Number.parseFloat(bestMember.tangentialForce()).toPrecision(2);
+}
+
+
 function updateGeometry() {
 
 	//Getting the slider values from the DOM:
@@ -38,6 +48,8 @@ function updateGeometry() {
 
 	//We use our best member to update the scene:
 	updateScene(bestMember);
+
+	updateResult(bestMember);
 }
 
 function runGeneticAlgorithm(cutWidth, cutDepth) {
@@ -62,4 +74,6 @@ function runGeneticAlgorithm(cutWidth, cutDepth) {
 	//Return the last iteration
 	return results[results.length - 1];
 }
+
+
 

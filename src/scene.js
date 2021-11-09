@@ -44,8 +44,18 @@ function addLighting() {
 	scene.add(pointLightOne);
 }
 
+function addCuttingTool(){
+	const millingCutterGeometry = new THREE.CylinderGeometry(10,10,80,10);
+	millingCutterGeometry.translate(125,125,-50);
+	const material = new THREE.MeshLambertMaterial( {color: 0x808080} );
+	const millingCutterMesh = new THREE.Mesh(millingCutterGeometry, material);
+	scene.add(millingCutterMesh);
+}
+
 //Adds the initial geometry:
 function addGeometry(member) {
+
+	addCuttingTool()
 
 	//Getting the initial cutting parameters for the member:
 	const parameters = member.parameters;
@@ -104,15 +114,10 @@ function addToolPath(member, width, height ){
 
 		for(var j = 0; j < noCutsWidth; j++){
 
-			//adding the geometry for the width cuts:#
-			//Depth is temporarily being set from a hard coded variable:
 			var toolPath = new THREE.BoxBufferGeometry(widthIncrement, heightIncrement, 150);
-
 			var widthOffset = cutsOriginX + j * widthIncrement + widthIncrement / 2;
 			var heightOffset = cutsOriginY +  i * heightIncrement + heightIncrement / 2;
-
 			toolPath.translate(widthOffset, heightOffset, 75);
-			
 			var material = new THREE.MeshLambertMaterial({ color: 0x808080, transparent:true, opacity: 0.5 });
 			var toolPathMesh = new THREE.Mesh( toolPath, material );
 

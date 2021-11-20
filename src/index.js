@@ -28,7 +28,7 @@ function updateCutDepth(event) {
 }
 
 function updateResult(bestMember) {
-	document.getElementById("generationsResult").innerHTML = bestMember.generations;
+	document.getElementById("generationsResult").innerHTML = 10;
 	document.getElementById("fitnessResult").innerHTML = Math.round(bestMember.fitness());
 	document.getElementById("widthCutResult").innerHTML = Math.round(bestMember.noPassesRadial());
 	document.getElementById("heightCutResult").innerHTML = Math.round(bestMember.noPassesAxial());

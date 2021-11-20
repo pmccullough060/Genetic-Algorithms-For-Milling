@@ -87,14 +87,23 @@
 
         </div>
 
-        <div class="aboutButton">
-            <div>
-                hello
-            </div>
-        </div>
-
         <div class="about">
-            hello blah
+            <div class="aboutInner">
+                <h2>What is this?</h2>
+                <p>The GeneticMilling project uses genetic algorithms to optimise a shoulder milling operation 
+                   by choosing the best cut width and cut height to minimise maching time without destroying the tool. 
+                </p>
+
+                <p>We Start the simulation with a population of 50 individuals, each representing a cutting operation 
+                   with a randomly generated cut width and cut depth. A <a href="https://www.w3schools.com">tournament selection</a> 
+                   method is used to determine the best cutting parameters for each generation. This involves running several
+                   "tournaments" among a few individuals from the population, usually those with the highest fitness.
+                   The winners are selected for crossover where its parameters are passed onto the next generation. Once this process
+                   is repeated for a number of generations the average fitness for the population will be increased, and the fitness
+                   individual from the population is used for the simulation.
+                </p>
+            </div>
+            
         </div>
 
     </div>

@@ -115,13 +115,15 @@ canvas{
     margin: 10px;
     min-height: 200px;
     border-radius: 10px;
-    height: 150px;
+    height: auto;
     grid-column: 2;
     grid-row: 3;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     box-shadow: 0 0 10px gray;
+}
+
+.aboutInner {
+    margin: 10px;
+    line-height: 1.5em;
 }
 
 .resultsHeader {

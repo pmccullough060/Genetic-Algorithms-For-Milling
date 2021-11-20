@@ -36,7 +36,6 @@ function updateResult(bestMember) {
 	document.getElementById("cutForceResult").innerHTML = Number.parseFloat(bestMember.tangentialForce()).toPrecision(2);
 }
 
-
 function updateGeometry() {
 
 	//Getting the slider values from the DOM:
